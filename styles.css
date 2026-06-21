@@ -1,14 +1,15 @@
 :root {
   --bg: #f7f3ec;
   --bg-soft: #efe5d7;
-  --surface: rgba(255, 255, 255, 0.72);
+  --surface: rgba(255, 255, 255, 0.78);
   --text: #1f1b18;
   --muted: #5f554e;
   --accent: #c1954f;
   --accent-deep: #8f5f22;
   --line: rgba(31, 27, 24, 0.12);
-  --radius: 18px;
-  --shadow: 0 18px 38px rgba(50, 36, 20, 0.14);
+  --radius: 20px;
+  --shadow: 0 22px 44px rgba(50, 36, 20, 0.12);
+  --header-height: 74px;
   --font-display: "Bodoni MT", "Didot", "Garamond", "Times New Roman", serif;
   --font-body: "Avenir Next", "Century Gothic", "Gill Sans", sans-serif;
 }
@@ -25,40 +26,46 @@ body {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+  scroll-snap-type: y mandatory;
 }
 
 body {
   font-family: var(--font-body);
   color: var(--text);
   background:
-    radial-gradient(circle at 10% 0%, #f0dfc8 0%, transparent 46%),
-    radial-gradient(circle at 90% 20%, #e7d3b4 0%, transparent 40%),
-    linear-gradient(180deg, var(--bg) 0%, #f3ece2 100%);
+    radial-gradient(circle at 15% 10%, rgba(240, 223, 200, 0.82) 0%, transparent 42%),
+    radial-gradient(circle at 85% 18%, rgba(231, 211, 180, 0.72) 0%, transparent 38%),
+    linear-gradient(165deg, #f8f2e9 0%, #f3ece2 52%, #efe6db 100%);
+  background-attachment: fixed;
   line-height: 1.6;
   min-height: 100vh;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 main {
-  height: 100svh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
+  min-height: auto;
   scroll-behavior: smooth;
-  overscroll-behavior-y: contain;
-  scroll-padding-top: 4.8rem;
+  padding-top: 0;
+  margin-top: var(--header-height);
 }
 
 main > section {
-  min-height: 100svh;
+  height: calc(100dvh - var(--header-height));
+  min-height: calc(100dvh - var(--header-height));
+  box-sizing: border-box;
   display: flex;
+  justify-content: center;
   align-items: center;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  padding: clamp(3.5rem, 7vh, 5.5rem) 0;
+  scroll-margin-top: var(--header-height);
+  padding: clamp(2.8rem, 5.8vh, 4.4rem) 0;
+  background: transparent;
 }
 
 main > section:first-child {
-  padding-top: clamp(6.2rem, 13vh, 8.2rem);
+  padding-top: clamp(2.8rem, 5.8vh, 4.4rem);
 }
 
 main > section > .container {
@@ -71,7 +78,7 @@ img {
 }
 
 .container {
-  width: min(1080px, calc(100% - 5.5rem));
+  width: min(1140px, calc(100% - clamp(2.6rem, 8vw, 8rem)));
   margin: 0 auto;
 }
 
@@ -86,8 +93,10 @@ img {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 20;
   backdrop-filter: blur(10px);
   background: rgba(247, 243, 236, 0.75);
@@ -98,6 +107,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: var(--header-height);
   padding: 0.9rem 0;
 }
 
@@ -127,9 +137,9 @@ img {
 
 .hero {
   display: grid;
-  gap: 2rem;
+  gap: 2.4rem;
   grid-template-columns: 1.1fr 0.9fr;
-  padding: 4.2rem 0 3.2rem;
+  align-items: center;
 }
 
 .eyebrow {
@@ -142,7 +152,7 @@ img {
 
 h1,
 h2 {
-  margin: 0.5rem 0 1rem;
+  margin: 1rem 0 1.6rem;
   font-family: var(--font-display);
   line-height: 1.1;
   letter-spacing: 0.01em;
@@ -159,6 +169,18 @@ h2 {
 .hero-copy p {
   color: var(--muted);
   max-width: 54ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.hero-copy {
+  max-width: 62ch;
+  margin-inline: auto;
+}
+
+.hero-copy .eyebrow,
+.hero-copy h1 {
+  text-align: center;
 }
 
 .hero-actions {
@@ -166,6 +188,7 @@ h2 {
   flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 1.4rem;
+  justify-content: center;
 }
 
 .btn {
@@ -227,54 +250,40 @@ h2 {
   font-size: 0.88rem;
 }
 
-.gallery-section,
-.about-section,
-.reviews-section,
-.contact-section {
-  padding: 0;
-}
-
-.hero {
-  background:
-    radial-gradient(circle at 10% 0%, #f0dfc8 0%, transparent 46%),
-    radial-gradient(circle at 90% 20%, #e7d3b4 0%, transparent 40%),
-    linear-gradient(180deg, rgba(247, 243, 236, 0.94) 0%, rgba(243, 236, 226, 0.94) 100%);
-}
-
-.about-section,
-.reviews-section {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(239, 229, 215, 0.3) 100%);
-}
-
-.gallery-section,
-.contact-section {
-  background: linear-gradient(180deg, rgba(247, 243, 236, 0.84) 0%, rgba(255, 255, 255, 0.18) 100%);
-}
-
-.about-section {
-  padding-top: 0;
-}
-
 .section-head {
-  margin-bottom: 1.4rem;
+  margin: 0 auto 2rem;
+  max-width: 70ch;
+  text-align: center;
 }
 
 .section-intro {
-  margin: 0;
+  margin: 0 auto;
   color: var(--muted);
-  max-width: 68ch;
+  max-width: 62ch;
 }
 
 .about-grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: 1.4rem;
-  align-items: stretch;
+  align-items: center;
 }
 
 .about-grid p {
   color: var(--muted);
   max-width: 58ch;
+}
+
+.about-grid > div:first-child,
+.contact-grid > div:first-child {
+  max-width: 62ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.about-grid > div:first-child p,
+.contact-grid > div:first-child p {
+  margin-inline: auto;
 }
 
 .about-cards {
@@ -454,7 +463,7 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.4rem;
-  align-items: start;
+  align-items: center;
 }
 
 .reviews-grid {
@@ -546,9 +555,15 @@ h2 {
 
 .site-footer {
   border-top: 1px solid var(--line);
-  padding: 1rem 0 1.8rem;
+  padding: 1.2rem 0 1.8rem;
+  background: transparent;
   color: var(--muted);
   font-size: 0.84rem;
+}
+
+.site-footer p {
+  margin: 0;
+  text-align: center;
 }
 
 .reveal {
@@ -577,6 +592,10 @@ h2 {
 }
 
 @media (max-width: 920px) {
+  :root {
+    --header-height: 70px;
+  }
+
   .hero,
   .about-grid,
   .contact-grid {
@@ -584,7 +603,7 @@ h2 {
   }
 
   .container {
-    width: min(1120px, calc(100% - 3.4rem));
+    width: min(1120px, calc(100% - 3.2rem));
   }
 
   .reviews-grid {
@@ -596,7 +615,7 @@ h2 {
   }
 
   .hero {
-    padding-top: 3rem;
+    gap: 1.8rem;
   }
 
   .nav-links {
@@ -605,6 +624,20 @@ h2 {
 }
 
 @media (max-width: 560px) {
+  :root {
+    --header-height: 66px;
+  }
+
+  main > section {
+    height: calc(100dvh - var(--header-height));
+    min-height: calc(100dvh - var(--header-height));
+    padding: clamp(2.4rem, 5.4vh, 3.8rem) 0;
+  }
+
+  main > section:first-child {
+    padding-top: clamp(2.4rem, 5.4vh, 3.8rem);
+  }
+
   .brand {
     font-size: 1.65rem;
   }
@@ -613,16 +646,8 @@ h2 {
     font-size: 0.82rem;
   }
 
-  .hero {
-    padding-top: 2.2rem;
-  }
-
   .container {
-    width: min(1120px, calc(100% - 2.6rem));
-  }
-
-  main > section {
-    min-height: 100svh;
+    width: min(1120px, calc(100% - 2.2rem));
   }
 
   .carousel-control {

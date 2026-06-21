@@ -3,7 +3,6 @@ const slides = Array.from(document.querySelectorAll(".slide"));
 const prevBtn = document.querySelector(".carousel-control.prev");
 const nextBtn = document.querySelector(".carousel-control.next");
 const dotsContainer = document.getElementById("carouselDots");
-const mainScroll = document.querySelector("main");
 const pageSections = Array.from(document.querySelectorAll("main > section"));
 let sectionObserver = null;
 
@@ -39,7 +38,7 @@ function updateActiveSectionFromObserver(entries) {
 
 function setupSectionObserver() {
   sectionObserver = new IntersectionObserver(updateActiveSectionFromObserver, {
-    root: mainScroll,
+    root: null,
     threshold: 0.65,
   });
 
@@ -61,11 +60,16 @@ function handleNavigationLinkClick(event) {
   }
 
   event.preventDefault();
-  const nextIndex = pageSections.indexOf(targetSection);
+  const relatedSection = targetSection.closest("main > section") || targetSection;
+  const nextIndex = pageSections.indexOf(relatedSection);
 
   if (nextIndex >= 0) {
     scrollToSection(nextIndex);
+    return;
   }
+
+  // Fallback for in-section anchors that are not direct section elements.
+  targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 window.addEventListener("load", () => {
   setupSectionObserver();
